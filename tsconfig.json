@@ -11,5 +11,10 @@
       "@/types/*": ["src/types/*"],
       "@/utils/*": ["src/utils/*"]
     }
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "nativewind-env.d.ts"
+  ]
 }
