@@ -2,14 +2,7 @@ module.exports = function(api) {
     api.cache(true);
 
     return {
-        presets: [
-        ['@babel/preset-env', { targets: { node: 'current' } }],
-        '@babel/preset-typescript',
-        ['@babel/preset-react', { runtime: 'automatic' }],
-        '@babel/preset-expo',
-        ],
-        plugins: [
-            "nativewind/babel",
-        ],
+        presets: ['babel-preset-expo'],
+        plugins: [],
     };
 };
