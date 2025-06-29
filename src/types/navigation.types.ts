@@ -10,6 +10,7 @@ export type RootStackParamList = {
 
 // Definir las rutas de las pestañas
 export type TabParamList = {
+  NativeWindTest: undefined;
   PastLaunches: undefined;
   UpcomingLaunches: undefined;
 };

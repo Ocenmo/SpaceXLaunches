@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Launch } from "@/types/launch.types";
 
 interface LaunchCardProps {
@@ -8,9 +8,10 @@ interface LaunchCardProps {
 }
 
 export const LaunchCard: React.FC<LaunchCardProps> = ({ launch, onPress }) => {
-    const getStatusColor = (success: boolean | null) => {
-        if (success === null) return '#6b7280'; // gray-500
-        return success ? '#10b981' : '#ef4444'; // green-500 : red-500
+    const getStatusBadgeStyle = (success: boolean | null) => {
+        const baseClasses = "mt-2 px-2 py-1 rounded-full self-start";
+        if (success === null) return `${baseClasses} bg-gray-500`;
+        return success ? `${baseClasses} bg-green-500` : `${baseClasses} bg-red-500`;
     };
 
     const formatDate = (date: Date) => {
@@ -18,15 +19,20 @@ export const LaunchCard: React.FC<LaunchCardProps> = ({ launch, onPress }) => {
     };
 
     return (
-        <TouchableOpacity onPress={onPress} style={styles.card}>
-            <View style={styles.cardContent}>
-                <View style={styles.textContainer}>
-                    <Text style={styles.title}>{launch.name}</Text>
-                    <Text style={styles.date}>
+        <TouchableOpacity
+            onPress={onPress}
+            className="bg-white rounded-lg p-4 mx-2 my-2 shadow-lg"
+        >
+            <View className="flex-row justify-between items-start">
+                <View className="flex-1">
+                    <Text className="text-lg font-bold text-gray-800">
+                        {launch.name}
+                    </Text>
+                    <Text className="text-sm text-gray-600 mt-1">
                         {formatDate(new Date(launch.date_utc))}
                     </Text>
-                    <View style={[styles.statusBadge, { backgroundColor: getStatusColor(launch.success) }]}>
-                        <Text style={styles.statusText}>
+                    <View className={getStatusBadgeStyle(launch.success)}>
+                        <Text className="text-white text-xs font-medium">
                             {launch.upcoming ? "Upcoming" : (launch.success ? "Successful" : "Failed")}
                         </Text>
                     </View>
@@ -34,59 +40,10 @@ export const LaunchCard: React.FC<LaunchCardProps> = ({ launch, onPress }) => {
                 {launch.links?.patch?.small && (
                     <Image
                         source={{ uri: launch.links.patch.small }}
-                        style={styles.image}
+                        className="w-12 h-12 rounded"
                     />
                 )}
             </View>
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    card: {
-        backgroundColor: 'white',
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-        padding: 16,
-        margin: 8,
-    },
-    cardContent: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-    },
-    textContainer: {
-        flex: 1,
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#1f2937',
-    },
-    date: {
-        fontSize: 14,
-        color: '#6b7280',
-        marginTop: 4,
-    },
-    statusBadge: {
-        marginTop: 8,
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 16,
-        alignSelf: 'flex-start',
-    },
-    statusText: {
-        color: 'white',
-        fontSize: 12,
-        fontWeight: '500',
-    },
-    image: {
-        width: 48,
-        height: 48,
-        borderRadius: 4,
-    },
-});
