@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
     View,
     FlatList,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    ActivityIndicator,
 } from 'react-native';
 import { LaunchCard } from '@/components/LaunchCard/LaunchCard';
+import { SearchBar } from '@/components/SearchBar';
+import { EmptyState } from '@/components/EmptyState';
+import { LoadingState } from '@/components/LoadingState';
 import { Launch, SortOption, FilterOption } from '@/types/launch.types';
 import { PastLaunchesNavigationProp } from '@/types/navigation.types';
 import { useLaunchService } from '@/hooks/useLaunchService';
@@ -67,47 +66,22 @@ export const PastLaunchesScreen: React.FC<PastLaunchesScreenProps> = ({ navigati
 
     if (loading) {
         return (
-            <View className="flex-1 items-center justify-center bg-gray-100">
-                <ActivityIndicator size="large" color="#3b82f6" />
-                <Text className="mt-2 text-gray-600">
-                    Cargando lanzamientos...
-                </Text>
-            </View>
+            <LoadingState message="🚀 Cargando lanzamientos de SpaceX..." />
         );
     }
 
     return (
-        <View className="flex-1 bg-gray-100">
-            {/* Search Bar */}
-            <View className="bg-white p-4">
-                <TextInput
-                    className="bg-white p-4 border border-gray-200 rounded-lg"
-                    placeholder="Buscar lanzamientos..."
-                    placeholderTextColor="#6b7280"
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                />
-            </View>
-            {/* Filter and Sort Controls */}
-            <View className="bg-white px-4 pb-4 flex-row justify-between">
-                <TouchableOpacity
-                    className="bg-blue-500 px-4 py-2 rounded"
-                    onPress={() => {/* Modal Filtros */}}
-                >
-                    <Text className="text-white">
-                        Filtrar
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    className="bg-blue-500 px-4 py-2 rounded"
-                    onPress={() => {/* Modal Ordenar */}}
-                >
-                    <Text className="text-white">
-                        Ordenar
-                    </Text>
-                </TouchableOpacity>
-            </View>
+        <View className="flex-1 bg-gradient-to-b from-blue-50 to-blue-100">
+            {/* SearchBar Component */}
+            <SearchBar
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                placeholder="Buscar por nombre de misión..."
+                showFilters={true}
+                onFilterPress={() => {/* Modal Filtros */}}
+                onSortPress={() => {/* Modal Ordenar */}}
+                resultsCount={filteredLaunches.length}
+            />
 
             {/* Lista de Lanzamientos */}
             <FlatList
@@ -119,7 +93,17 @@ export const PastLaunchesScreen: React.FC<PastLaunchesScreenProps> = ({ navigati
                         onPress={() => handleLaunchPress(item)}
                     />
                 )}
-                contentContainerStyle={{ padding: 16 }}
+                className="flex-1 pt-2"
+                showsVerticalScrollIndicator={false}
+                ListEmptyComponent={() => (
+                    <EmptyState
+                        icon="�"
+                        title="No se encontraron lanzamientos"
+                        description="Intenta ajustar tu búsqueda o filtros para encontrar los lanzamientos que buscas"
+                        actionText="Limpiar búsqueda"
+                        onActionPress={() => setSearchQuery('')}
+                    />
+                )}
             />
         </View>
     );
