@@ -2026,3 +2026,4 @@ npm test -- --verbose
 - [ ] Implementar micro-frontends
 - [ ] Agregar realtime updates
 - [ ] Soporte para tablets
+#Testeando pipeline
