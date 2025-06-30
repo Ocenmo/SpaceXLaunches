@@ -1,52 +1,85 @@
+/**
+ * Adapter para transformar y normalizar datos de la API de SpaceX
+ *
+ * Este adapter es el corazón de la transformación de datos en la aplicación.
+ * Se encarga de convertir los datos crudos de la API de SpaceX en información
+ * útil y presentable para la interfaz de usuario.
+ *
+ * Responsabilidades principales:
+ * - Normalizar estados de lanzamientos a formatos legibles
+ * - Calcular tiempos relativos en español natural
+ * - Formatear información técnica para mostrar al usuario
+ * - Extraer y organizar datos relevantes de estructuras complejas
+ * - Proporcionar colores consistentes para estados
+ *
+ * Este patrón Adapter nos protege de cambios en la API externa y centraliza
+ * toda la lógica de transformación de datos en un solo lugar.
+ */
+
 import { Launch, RocketDetail, LaunchpadDetail } from '@/types/launch.types';
 
-/**
- * Adapter para transformar datos de la API de SpaceX a formato interno consistente
- */
 export class SpaceXDataAdapter {
+
+    // ===== UTILIDADES DE FECHAS =====
+
     /**
-     * Normaliza fechas para mostrar en formato consistente
+     * Normaliza fechas de diferentes formatos a objetos Date consistentes
+     * La API de SpaceX puede devolver fechas en varios formatos
      */
     static normalizeDate(dateString: string | Date): Date {
         return new Date(dateString);
     }
 
+    // ===== TRANSFORMACIÓN DE ESTADOS =====
+
     /**
-     * Transforma el estado del lanzamiento a formato legible
+     * Transforma el estado de lanzamiento a formato amigable para la UI
+     *
+     * Convierte los valores booleanos/null de la API en:
+     * - Estados legibles en español
+     * - Colores consistentes para cada estado
+     * - Categorización simple para filtros
+     *
+     * @param launch - Datos del lanzamiento
+     * @returns Objeto con estado normalizado, texto y color
      */
     static getLaunchStatusDisplay(launch: Launch): {
         status: 'success' | 'failed' | 'upcoming' | 'unknown';
         displayText: string;
         color: string;
     } {
+        // Lanzamientos futuros - prioridad más alta
         if (launch.upcoming) {
             return {
                 status: 'upcoming',
                 displayText: 'Próximo',
-                color: '#3B82F6' // blue
+                color: '#3B82F6' // blue-500: color principal de la app
             };
         }
 
+        // Lanzamientos exitosos - feedback positivo
         if (launch.success === true) {
             return {
                 status: 'success',
                 displayText: 'Exitoso',
-                color: '#10B981' // green
+                color: '#10B981' // green-500: éxito claro
             };
         }
 
+        // Lanzamientos fallidos - feedback de error
         if (launch.success === false) {
             return {
                 status: 'failed',
                 displayText: 'Fallido',
-                color: '#EF4444' // red
+                color: '#EF4444' // red-500: error evidente
             };
         }
 
+        // Estado indeterminado - casos edge
         return {
             status: 'unknown',
             displayText: 'Desconocido',
-            color: '#6B7280' // gray
+            color: '#6B7280' // gray-500: neutral
         };
     }
 
