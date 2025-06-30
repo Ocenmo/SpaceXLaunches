@@ -42,7 +42,7 @@ El proyecto implementa una arquitectura robusta que prioriza la mantenibilidad y
 
 - **Arquitectura basada en Adapters** - Separación clara de responsabilidades
 - **Validación con Zod** - Type safety en tiempo de ejecución
-- **Testing comprehensivo** - 89 tests con 23% de cobertura (en crecimiento)
+- **Testing comprehensivo** - 89 tests con 23.01% de cobertura local / ~18% Codecov
 - **UI moderna con NativeWind** - Tailwind CSS para React Native
 - **Persistencia local** - AsyncStorage con abstracción propia
 - **Navegación fluida** - React Navigation configurado profesionalmente
@@ -2238,9 +2238,9 @@ npm test -- --verbose
 ### Estadísticas de Código
 - **Líneas de código**: ~3,500
 - **Archivos TypeScript**: 45+
-- **Componentes**: 15+
-- **Tests**: 85 casos
-- **Cobertura**: ~85%
+- **Componentes**: 11 (8 components + 3 screens)
+- **Tests**: 89 casos
+- **Cobertura**: ~23%
 
 ### Performance Benchmarks
 - **Tiempo de inicio**: < 3 segundos
@@ -2265,25 +2265,3 @@ npm test -- --verbose
 **Solución**: Implementar cache local y retry logic
 
 ---
-
-## 🚀 Próximos Pasos y Roadmap
-
-### Version 1.1.0
-- [ ] Implementar offline support
-- [ ] Agregar push notifications
-- [ ] Optimizar bundle size
-- [ ] Añadir animaciones avanzadas
-
-### Version 1.2.0
-- [ ] Modo dark theme
-- [ ] Compartir lanzamientos
-- [ ] Favoritos sincronizados
-- [ ] Widget nativo
-
-### Version 2.0.0
-- [ ] Migrar a React Native 0.80+
-- [ ] Implementar micro-frontends
-- [ ] Agregar realtime updates
-- [ ] Soporte para tablets
-#Testeando pipeline
-# Pipeline Test
