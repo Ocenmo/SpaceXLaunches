@@ -6,9 +6,9 @@ import { Launch } from '@/types/launch.types';
 const mockLaunch: Launch = {
     id: '1',
     name: 'Test Mission',
-    date_utc: new Date('2023-01-01T00:00:00Z'),
-    date_unix: 1672531200,
-    date_local: new Date('2023-01-01T00:00:00Z'),
+    date_utc: new Date('2023-06-15T12:00:00Z'),
+    date_unix: 1686830400,
+    date_local: new Date('2023-06-15T12:00:00Z'),
     date_precision: 'hour',
     success: true,
     upcoming: false,

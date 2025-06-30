@@ -86,15 +86,15 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
     const getSortButtonText = () => {
         switch (sortOption) {
         case 'date_asc':
-            return 'Date ↑';
+            return 'Fecha ↑';
         case 'date_desc':
-            return 'Date ↓';
+            return 'Fecha ↓';
         case 'name_asc':
-            return 'Name ↑';
+            return 'Nombre ↑';
         case 'name_desc':
-            return 'Name ↓';
+            return 'Nombre ↓';
         default:
-            return 'Sort';
+            return 'Ordenar';
         }
     };
 
@@ -113,7 +113,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
         {/* Countdown Timer */}
         <View className="mt-3 pt-3 border-t border-gray-200">
             <Text className="text-sm text-gray-600 mb-1">
-            Time until launch:
+            Tiempo restante:
             </Text>
             <Text className="text-lg font-bold text-blue-600">
             {getCountdownText(item)}
@@ -151,7 +151,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
         <View className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <View className="bg-white rounded-lg p-6 mx-4 w-80">
             <Text className="text-lg font-bold mb-4 text-gray-800">
-                Sort Options
+                Ordenar lanzamientos
             </Text>
 
             <TouchableOpacity
@@ -159,7 +159,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
                 onPress={() => handleSortOptionPress('date_asc')}
             >
                 <Text className={`text-base ${sortOption === 'date_asc' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
-                Date (Earliest First)
+                Fecha (Más reciente)
                 </Text>
             </TouchableOpacity>
 
@@ -168,7 +168,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
                 onPress={() => handleSortOptionPress('date_desc')}
             >
                 <Text className={`text-base ${sortOption === 'date_desc' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
-                Date (Latest First)
+                Fecha (Más antigua)
                 </Text>
             </TouchableOpacity>
 
@@ -177,7 +177,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
                 onPress={() => handleSortOptionPress('name_asc')}
             >
                 <Text className={`text-base ${sortOption === 'name_asc' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
-                Name (A-Z)
+                Nombre (A-Z)
                 </Text>
             </TouchableOpacity>
 
@@ -186,7 +186,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
                 onPress={() => handleSortOptionPress('name_desc')}
             >
                 <Text className={`text-base ${sortOption === 'name_desc' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
-                Name (Z-A)
+                Nombre (Z-A)
                 </Text>
             </TouchableOpacity>
 
@@ -195,7 +195,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
                 onPress={() => setShowSortModal(false)}
             >
                 <Text className="text-white text-center font-medium">
-                Cancel
+                Cancelar
                 </Text>
             </TouchableOpacity>
             </View>
@@ -209,12 +209,12 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
             🚀
         </Text>
         <Text className="text-lg font-medium text-gray-800 mb-2">
-            No Upcoming Launches
+            No hay lanzamientos próximos
         </Text>
         <Text className="text-gray-600 text-center">
             {searchQuery ?
-            `No launches found for "${searchQuery}"` :
-            'There are no upcoming launches scheduled at the moment.'
+            `No se encontraron lanzamientos para "${searchQuery}"` :
+            'No hay lanzamientos programados en este momento.'
             }
         </Text>
         {searchQuery && (
@@ -232,7 +232,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
         return (
         <View className="flex-1 justify-center items-center bg-gray-100">
             <ActivityIndicator size="large" color="#0000ff" />
-            <Text className="mt-2 text-gray-600">Loading upcoming launches...</Text>
+            <Text className="mt-2 text-gray-600">Cargando lanzamientos próximos...</Text>
         </View>
         );
     }
@@ -243,7 +243,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
         <View className="bg-white p-4 shadow-sm">
             <TextInput
             className="border border-gray-300 rounded-lg px-3 py-2 text-base"
-            placeholder="Search upcoming missions..."
+            placeholder="Buscar lanzamientos próximos..."
             value={searchQuery}
             onChangeText={setSearchQuery}
             returnKeyType="search"
@@ -254,7 +254,7 @@ export const UpcomingLaunchesScreen: React.FC<UpcomingLaunchesScreenProps> = ({
         <View className="bg-white px-4 pb-4 flex-row justify-between items-center shadow-sm">
             <View className="flex-row items-center">
             <Text className="text-gray-600 mr-2">
-                {filteredLaunches.length} upcoming launches
+                {filteredLaunches.length} Lanzamientos proximos
             </Text>
             </View>
 

@@ -45,7 +45,7 @@ exports[`LaunchCard should display correct status for failed launch 1`] = `
           ref={[Function]}
         >
           📅 
-          31 de diciembre de 2022
+          15 de junio de 2023
         </div>
         <div
           className="css-text-146c3p1"
@@ -236,7 +236,7 @@ exports[`LaunchCard should display correct status for upcoming launch 1`] = `
           ref={[Function]}
         >
           📅 
-          31 de diciembre de 2022
+          15 de junio de 2023
         </div>
       </div>
       <div
@@ -432,7 +432,7 @@ exports[`LaunchCard should render launch information correctly 1`] = `
           ref={[Function]}
         >
           📅 
-          31 de diciembre de 2022
+          15 de junio de 2023
         </div>
         <div
           className="css-text-146c3p1"
