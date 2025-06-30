@@ -195,7 +195,7 @@ test:
 ```
 
 **¿Qué valida este job?**
-- ✅ **89 tests** ejecutándose correctamente
+- ✅ **89 tests** ejecutándose correctamente (23.01% cobertura)
 - ✅ **TypeScript** sin errores de compilación
 - ✅ **Coverage de código** reportado a Codecov
 - ✅ **Snapshots** de componentes actualizados
@@ -229,7 +229,7 @@ deploy:
 ### 📊 Métricas y Monitoreo
 
 #### **Coverage de Tests:**
-- **89 tests** en total ejecutándose
+- **89 tests** en total ejecutándose (cobertura: 23.01% local / ~18% Codecov)
 - **23.01%** de cobertura global (en crecimiento)
 - **100%** en componentes críticos como `LaunchCard`
 - **Snapshots testing** para UI consistency
@@ -1004,7 +1004,7 @@ Comencé haciendo tests unitarios porque me resultaron más fáciles de entender
 ### 📊 Estado Actual del Testing
 
 #### **Métricas del Pipeline:**
-- ✅ **89 tests** ejecutándose automáticamente
+- ✅ **89 tests** ejecutándose automáticamente (23.01% cobertura)
 - ✅ **23.01%** de cobertura global (en crecimiento)
 - ✅ **8 test suites** organizados por módulos
 - ✅ **3 snapshots** para testing de UI
