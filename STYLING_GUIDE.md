@@ -1,21 +1,19 @@
-# Sistema de Estilos Tailwind Nativo
+# Sistema de Estilos con NativeWind
 
-Este proyecto usa un sistema de estilos nativo que replica las utilidades de Tailwind CSS usando StyleSheet de React Native. Esto garantiza compatibilidad, performance y confiabilidad.
+Este proyecto utiliza [NativeWind](https://www.nativewind.dev/) para aplicar utilidades de Tailwind CSS directamente en componentes de React Native. Esto permite escribir clases Tailwind en los props `className`, facilitando la escritura y mantenimiento de estilos.
 
 ## Uso
 
-### Importar los estilos
+### Instalación
 
-```typescript
-import { commonStyles, colors, combineStyles } from '@/styles/tailwindStyles';
-```
+Asegúrate de tener NativeWind instalado y configurado en tu proyecto. Consulta la [documentación oficial](https://www.nativewind.dev/quick-starts/expo) para detalles de instalación.
 
 ### Ejemplos de uso
 
 #### Layout básico
 ```tsx
-<View style={combineStyles(commonStyles.flex1, commonStyles.bgGray100)}>
-  <Text style={combineStyles(commonStyles.textLg, commonStyles.fontBold)}>
+<View className="flex-1 bg-gray-100">
+  <Text className="text-lg font-bold">
     Mi título
   </Text>
 </View>
@@ -23,35 +21,21 @@ import { commonStyles, colors, combineStyles } from '@/styles/tailwindStyles';
 
 #### Tarjeta con sombra
 ```tsx
-<View style={combineStyles(
-  commonStyles.bgWhite,
-  commonStyles.p4,
-  commonStyles.roundedLg,
-  commonStyles.shadowLg
-)}>
+<View className="bg-white p-4 rounded-lg shadow-lg">
   <Text>Contenido de la tarjeta</Text>
 </View>
 ```
 
 #### Botón
 ```tsx
-<TouchableOpacity style={combineStyles(
-  commonStyles.bgBlue500,
-  commonStyles.px4,
-  commonStyles.py2,
-  commonStyles.rounded
-)}>
-  <Text style={commonStyles.textWhite}>Mi botón</Text>
+<TouchableOpacity className="bg-blue-500 px-4 py-2 rounded">
+  <Text className="text-white">Mi botón</Text>
 </TouchableOpacity>
 ```
 
 #### Flexbox
 ```tsx
-<View style={combineStyles(
-  commonStyles.flexRow,
-  commonStyles.justifyBetween,
-  commonStyles.itemsCenter
-)}>
+<View className="flex-row justify-between items-center">
   <Text>Izquierda</Text>
   <Text>Derecha</Text>
 </View>
@@ -59,37 +43,23 @@ import { commonStyles, colors, combineStyles } from '@/styles/tailwindStyles';
 
 ## Ventajas
 
-1. **Compatibilidad garantizada**: Usa StyleSheet nativo de React Native
-2. **Performance optimizada**: No hay overhead de compilación en tiempo real
-3. **Tipado completo**: TypeScript support completo
-4. **Fácil mantenimiento**: Colores y spacing centralizados
-5. **Extendible**: Fácil agregar nuevos estilos
+1. **Sintaxis familiar**: Usa clases Tailwind directamente en React Native
+2. **Compatibilidad**: Integración nativa con React Native y Expo
+3. **Tipado completo**: Soporte para TypeScript
+4. **Fácil mantenimiento**: Utilidades centralizadas y reutilizables
+5. **Extendible**: Puedes agregar clases personalizadas
 
-## Colores disponibles
+## Colores y Espaciado
 
-- `colors.gray100` a `colors.gray900`
-- `colors.blue100` a `colors.blue900`
-- `colors.red100` a `colors.red900`
-- `colors.green100` a `colors.green900`
-- `colors.white`, `colors.black`, `colors.transparent`
-
-## Espaciado
-
-- `spacing[1]` = 4px
-- `spacing[2]` = 8px
-- `spacing[4]` = 16px
-- `spacing[6]` = 24px
-- etc.
+- Utiliza los mismos nombres de colores y espaciados que Tailwind CSS (`bg-gray-100`, `text-blue-700`, `p-4`, etc.).
+- Consulta la [referencia de utilidades](https://www.nativewind.dev/docs/utilities) para ver todas las opciones disponibles.
 
 ## Combinando estilos
 
 ```tsx
-// Múltiples estilos predefinidos
-<View style={combineStyles(commonStyles.flex1, commonStyles.bgWhite)} />
+// Múltiples utilidades Tailwind
+<View className="flex-1 bg-white" />
 
-// Estilos predefinidos + customizados
-<View style={combineStyles(
-  commonStyles.bgBlue500,
-  { borderWidth: 2, borderColor: colors.blue700 }
-)} />
+// Utilidades Tailwind + estilos personalizados
+<View className="bg-blue-500" style={{ borderWidth: 2, borderColor: '#1e40af' }} />
 ```

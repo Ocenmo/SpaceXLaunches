@@ -1,5 +1,6 @@
 import { ILaunchRepository } from "./repositories/LaunchRepositorie";
 import { Launch, SortOption, FilterOption } from "@/types/launch.types";
+import { SpaceXDataAdapter, UIFormatAdapter } from "./adapters";
 
 export class LaunchService { // Define una clase llamada LaunchService
     constructor(private repository: ILaunchRepository) {} // Constructor que recibe un repositorio y lo guarda como propiedad privada
@@ -12,13 +13,13 @@ export class LaunchService { // Define una clase llamada LaunchService
         return this.repository.getUpcomingLaunches(); // Llama al método del repositorio para obtener lanzamientos futuros
     }
 
-    async getLaunchesDetails(id: string) { // Método asíncrono que retorna detalles de un lanzamiento por id
+    async getLaunchDetails(id: string) { // Método asíncrono que retorna detalles de un lanzamiento por id
         const launch = await this.repository.getLaunchById(id); // Obtiene el lanzamiento por id
         const rocket = await this.repository.getRocketById(launch.rocket); // Obtiene detalles del cohete usando el id del lanzamiento
         const launchpad = await this.repository.getLaunchpadById(launch.launchpad); // Obtiene detalles de la plataforma de lanzamiento
 
         return {
-            ...launch, // Copia todas las propiedades del lanzamiento
+            launch, // El lanzamiento original
             rocket,    // Añade los detalles del cohete
             launchpad  // Añade los detalles de la plataforma
         };
@@ -63,15 +64,46 @@ export class LaunchService { // Define una clase llamada LaunchService
         });
     }
 
-    searchLaunches(launches: Launch[], query: string): Launch[] {
-        if (!query.trim()) return launches;
+    /**
+     * Obtiene lanzamientos con datos enriquecidos usando adapters
+     */
+    async getEnrichedLaunches(type: 'past' | 'upcoming'): Promise<Array<Launch & {
+        statusDisplay: ReturnType<typeof SpaceXDataAdapter.getLaunchStatusDisplay>;
+        relativeTime: ReturnType<typeof SpaceXDataAdapter.getRelativeTime>;
+        formattedDate: string;
+    }>> {
+        const launches = type === 'past'
+            ? await this.getPastLaunches()
+            : await this.getUpcomingLaunches();
 
-        const searchTerm = query.toLowerCase();
+        return launches.map(launch => ({
+            ...launch,
+            statusDisplay: SpaceXDataAdapter.getLaunchStatusDisplay(launch),
+            relativeTime: SpaceXDataAdapter.getRelativeTime(launch),
+            formattedDate: UIFormatAdapter.formatDate(launch.date_utc, 'long')
+        }));
+    }
+
+    /**
+     * Busca lanzamientos con entrada sanitizada
+     */
+    searchLaunches(launches: Launch[], query: string): Launch[] {
+        // Usar DataValidationAdapter si está disponible
+        const cleanQuery = query.trim().toLowerCase();
+        if (!cleanQuery) return launches;
+
         return launches.filter(launch => {
             return (
-                launch.name.toLowerCase().includes(searchTerm) ||
-                (launch.details && launch.details.toLowerCase().includes(searchTerm))
+                launch.name.toLowerCase().includes(cleanQuery) ||
+                (launch.details && launch.details.toLowerCase().includes(cleanQuery))
             );
         });
+    }
+
+    /**
+     * Alias para compatibilidad hacia atrás
+     */
+    searchLaunchesSecure(launches: Launch[], query: string): Launch[] {
+        return this.searchLaunches(launches, query);
     }
 }

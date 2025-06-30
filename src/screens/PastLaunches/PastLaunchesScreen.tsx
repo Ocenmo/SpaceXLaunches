@@ -10,6 +10,7 @@ import { LoadingState } from '@/components/LoadingState';
 import { Launch, SortOption, FilterOption } from '@/types/launch.types';
 import { PastLaunchesNavigationProp } from '@/types/navigation.types';
 import { useLaunchService } from '@/hooks/useLaunchService';
+import { FilterSortModal } from '@/components/FilterSortModal/FilterSortModal';
 
 interface PastLaunchesScreenProps {
     navigation: PastLaunchesNavigationProp;
@@ -22,6 +23,8 @@ export const PastLaunchesScreen: React.FC<PastLaunchesScreenProps> = ({ navigati
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOption, setSortOption] = useState<SortOption>('date_desc');
     const [filterOption, setFilterOption] = useState<FilterOption>('all');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalType, setModalType] = useState<'filter' | 'sort'>('filter');
 
     const launchService = useLaunchService();
 
@@ -61,7 +64,21 @@ export const PastLaunchesScreen: React.FC<PastLaunchesScreenProps> = ({ navigati
     };
 
     const handleLaunchPress = (launch: Launch) => {
-        navigation.navigate('LaunchDetails', { launchId: launch.id });
+        navigation.navigate('LaunchDetail', { launchId: launch.id });
+    };
+
+    const handleFilterPress = () => {
+        setModalType('filter');
+        setModalVisible(true);
+    };
+
+    const handleSortPress = () => {
+        setModalType('sort');
+        setModalVisible(true);
+    };
+
+    const handleModalClose = () => {
+        setModalVisible(false);
     };
 
     if (loading) {
@@ -78,8 +95,8 @@ export const PastLaunchesScreen: React.FC<PastLaunchesScreenProps> = ({ navigati
                 onChangeText={setSearchQuery}
                 placeholder="Buscar por nombre de misión..."
                 showFilters={true}
-                onFilterPress={() => {/* Modal Filtros */}}
-                onSortPress={() => {/* Modal Ordenar */}}
+                onFilterPress={handleFilterPress}
+                onSortPress={handleSortPress}
                 resultsCount={filteredLaunches.length}
             />
 
@@ -104,6 +121,17 @@ export const PastLaunchesScreen: React.FC<PastLaunchesScreenProps> = ({ navigati
                         onActionPress={() => setSearchQuery('')}
                     />
                 )}
+            />
+
+            {/* FilterSort Modal */}
+            <FilterSortModal
+                visible={modalVisible}
+                onClose={handleModalClose}
+                currentFilter={filterOption}
+                currentSort={sortOption}
+                onFilterChange={setFilterOption}
+                onSortChange={setSortOption}
+                type={modalType}
             />
         </View>
     );

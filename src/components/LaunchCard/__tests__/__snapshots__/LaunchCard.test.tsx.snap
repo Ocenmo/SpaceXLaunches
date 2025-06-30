@@ -1,0 +1,579 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`LaunchCard should display correct status for failed launch 1`] = `
+<div
+  className="css-view-g5y9jx r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-testid="launch-card"
+  dir={null}
+  onClick={[Function]}
+  onContextMenu={[Function]}
+  onKeyDown={[Function]}
+  ref={[Function]}
+  style={
+    {
+      "transitionDuration": "0s",
+    }
+  }
+  tabIndex="0"
+>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    >
+      <div
+        className="css-text-146c3p1"
+        data-testid="launch-name"
+        dir="auto"
+        ref={[Function]}
+      >
+        Test Mission
+      </div>
+      <div
+        className="css-view-g5y9jx"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+        >
+          📅 
+          31 de diciembre de 2022
+        </div>
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+        >
+          (
+          Hace 2 años
+          )
+        </div>
+      </div>
+      <div
+        className="css-text-146c3p1"
+        dir="auto"
+        ref={[Function]}
+      >
+        Vuelo #
+        1
+      </div>
+    </div>
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    >
+      <div
+        className="css-view-g5y9jx r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-view-g5y9jx r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-ehq7j7"
+          dir={null}
+          ref={[Function]}
+          style={
+            {
+              "backgroundImage": "url("https://example.com/patch.png")",
+            }
+          }
+          suppressHydrationWarning={true}
+        />
+        <img
+          alt=""
+          className="css-accessibilityImage-9pa8cd"
+          draggable={false}
+          ref={
+            {
+              "current": null,
+            }
+          }
+          src="https://example.com/patch.png"
+        />
+      </div>
+      <div
+        className="css-view-g5y9jx r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73"
+        dir={null}
+        onClick={[Function]}
+        onContextMenu={[Function]}
+        onKeyDown={[Function]}
+        ref={[Function]}
+        style={
+          {
+            "transitionDuration": "0s",
+          }
+        }
+        tabIndex="0"
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+          style={
+            {
+              "fontSize": "16px",
+            }
+          }
+        >
+          ☆
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1qsk4np r-textOverflow-1udbk01"
+    dir="auto"
+    ref={[Function]}
+    style={
+      {
+        "WebkitLineClamp": 2,
+      }
+    }
+  >
+    Test details
+  </div>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+      style={
+        {
+          "backgroundColor": "rgba(254,242,242,1.00)",
+        }
+      }
+    >
+      <div
+        className="css-text-146c3p1"
+        data-testid="launch-status"
+        dir="auto"
+        ref={[Function]}
+        style={
+          {
+            "color": "rgba(220,38,38,1.00)",
+          }
+        }
+      >
+        Fallido
+      </div>
+    </div>
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    />
+  </div>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-text-146c3p1"
+      dir="auto"
+      ref={[Function]}
+    >
+      Toca para ver más detalles →
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LaunchCard should display correct status for upcoming launch 1`] = `
+<div
+  className="css-view-g5y9jx r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-testid="launch-card"
+  dir={null}
+  onClick={[Function]}
+  onContextMenu={[Function]}
+  onKeyDown={[Function]}
+  ref={[Function]}
+  style={
+    {
+      "transitionDuration": "0s",
+    }
+  }
+  tabIndex="0"
+>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    >
+      <div
+        className="css-text-146c3p1"
+        data-testid="launch-name"
+        dir="auto"
+        ref={[Function]}
+      >
+        Test Mission
+      </div>
+      <div
+        className="css-view-g5y9jx"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+        >
+          📅 
+          31 de diciembre de 2022
+        </div>
+      </div>
+      <div
+        className="css-view-g5y9jx"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+        >
+          ⏰ 
+          Hace 2 años
+        </div>
+      </div>
+      <div
+        className="css-text-146c3p1"
+        dir="auto"
+        ref={[Function]}
+      >
+        Vuelo #
+        1
+      </div>
+    </div>
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    >
+      <div
+        className="css-view-g5y9jx r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-view-g5y9jx r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-ehq7j7"
+          dir={null}
+          ref={[Function]}
+          style={
+            {
+              "backgroundImage": "url("https://example.com/patch.png")",
+            }
+          }
+          suppressHydrationWarning={true}
+        />
+        <img
+          alt=""
+          className="css-accessibilityImage-9pa8cd"
+          draggable={false}
+          ref={
+            {
+              "current": null,
+            }
+          }
+          src="https://example.com/patch.png"
+        />
+      </div>
+      <div
+        className="css-view-g5y9jx r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73"
+        dir={null}
+        onClick={[Function]}
+        onContextMenu={[Function]}
+        onKeyDown={[Function]}
+        ref={[Function]}
+        style={
+          {
+            "transitionDuration": "0s",
+          }
+        }
+        tabIndex="0"
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+          style={
+            {
+              "fontSize": "16px",
+            }
+          }
+        >
+          ☆
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1qsk4np r-textOverflow-1udbk01"
+    dir="auto"
+    ref={[Function]}
+    style={
+      {
+        "WebkitLineClamp": 2,
+      }
+    }
+  >
+    Test details
+  </div>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+      style={
+        {
+          "backgroundColor": "rgba(219,234,254,1.00)",
+        }
+      }
+    >
+      <div
+        className="css-text-146c3p1"
+        data-testid="launch-status"
+        dir="auto"
+        ref={[Function]}
+        style={
+          {
+            "color": "rgba(29,78,216,1.00)",
+          }
+        }
+      >
+        Próximo
+      </div>
+    </div>
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    />
+  </div>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-text-146c3p1"
+      dir="auto"
+      ref={[Function]}
+    >
+      Toca para ver más detalles →
+    </div>
+  </div>
+</div>
+`;
+
+exports[`LaunchCard should render launch information correctly 1`] = `
+<div
+  className="css-view-g5y9jx r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73"
+  data-testid="launch-card"
+  dir={null}
+  onClick={[Function]}
+  onContextMenu={[Function]}
+  onKeyDown={[Function]}
+  ref={[Function]}
+  style={
+    {
+      "transitionDuration": "0s",
+    }
+  }
+  tabIndex="0"
+>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    >
+      <div
+        className="css-text-146c3p1"
+        data-testid="launch-name"
+        dir="auto"
+        ref={[Function]}
+      >
+        Test Mission
+      </div>
+      <div
+        className="css-view-g5y9jx"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+        >
+          📅 
+          31 de diciembre de 2022
+        </div>
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+        >
+          (
+          Hace 2 años
+          )
+        </div>
+      </div>
+      <div
+        className="css-text-146c3p1"
+        dir="auto"
+        ref={[Function]}
+      >
+        Vuelo #
+        1
+      </div>
+    </div>
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    >
+      <div
+        className="css-view-g5y9jx r-flexBasis-1mlwlqe r-overflow-1udh08x r-zIndex-417010"
+        dir={null}
+        ref={[Function]}
+      >
+        <div
+          className="css-view-g5y9jx r-backgroundColor-1niwhzg r-backgroundPosition-vvn4in r-backgroundRepeat-u6sd8q r-bottom-1p0dtai r-height-1pi2tsx r-left-1d2f490 r-position-u8s1d r-right-zchlnj r-top-ipm5af r-width-13qz1uu r-zIndex-1wyyakw r-backgroundSize-ehq7j7"
+          dir={null}
+          ref={[Function]}
+          style={
+            {
+              "backgroundImage": "url("https://example.com/patch.png")",
+            }
+          }
+          suppressHydrationWarning={true}
+        />
+        <img
+          alt=""
+          className="css-accessibilityImage-9pa8cd"
+          draggable={false}
+          ref={
+            {
+              "current": null,
+            }
+          }
+          src="https://example.com/patch.png"
+        />
+      </div>
+      <div
+        className="css-view-g5y9jx r-transitionProperty-1i6wzkk r-userSelect-lrvibr r-cursor-1loqt21 r-touchAction-1otgn73"
+        dir={null}
+        onClick={[Function]}
+        onContextMenu={[Function]}
+        onKeyDown={[Function]}
+        ref={[Function]}
+        style={
+          {
+            "transitionDuration": "0s",
+          }
+        }
+        tabIndex="0"
+      >
+        <div
+          className="css-text-146c3p1"
+          dir="auto"
+          ref={[Function]}
+          style={
+            {
+              "fontSize": "16px",
+            }
+          }
+        >
+          ☆
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="css-text-146c3p1 r-WebkitBoxOrient-8akbws r-display-krxsd3 r-maxWidth-dnmrzs r-overflow-1qsk4np r-textOverflow-1udbk01"
+    dir="auto"
+    ref={[Function]}
+    style={
+      {
+        "WebkitLineClamp": 2,
+      }
+    }
+  >
+    Test details
+  </div>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+      style={
+        {
+          "backgroundColor": "rgba(220,252,231,1.00)",
+        }
+      }
+    >
+      <div
+        className="css-text-146c3p1"
+        data-testid="launch-status"
+        dir="auto"
+        ref={[Function]}
+        style={
+          {
+            "color": "rgba(22,101,52,1.00)",
+          }
+        }
+      >
+        Exitoso
+      </div>
+    </div>
+    <div
+      className="css-view-g5y9jx"
+      dir={null}
+      ref={[Function]}
+    />
+  </div>
+  <div
+    className="css-view-g5y9jx"
+    dir={null}
+    ref={[Function]}
+  >
+    <div
+      className="css-text-146c3p1"
+      dir="auto"
+      ref={[Function]}
+    >
+      Toca para ver más detalles →
+    </div>
+  </div>
+</div>
+`;

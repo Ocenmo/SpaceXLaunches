@@ -5,7 +5,7 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 // Definir las rutas del Stack principal
 export type RootStackParamList = {
   MainTabs: undefined;
-  LaunchDetails: { launchId: string };
+  LaunchDetail: { launchId: string };
 };
 
 // Definir las rutas de las pestañas

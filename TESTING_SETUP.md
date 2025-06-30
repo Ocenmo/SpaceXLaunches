@@ -4,7 +4,7 @@
 
 Has configurado exitosamente Jest para testing en tu proyecto de React Native con Expo. El setup está funcionando correctamente para:
 
-### 📦 Dependencias Instaladas
+### Dependencias Instaladas
 
 - **jest** v30.0.3 - Framework de testing principal
 - **@testing-library/react-native** v13.2.0 - Utilidades para testing de componentes React Native
@@ -14,7 +14,7 @@ Has configurado exitosamente Jest para testing en tu proyecto de React Native co
 - **@babel/preset-env, @babel/preset-typescript, @babel/preset-react** - Presets de Babel para transformación
 - **react-native-web, react-dom** - Para mockar React Native en el navegador
 
-### 🛠️ Configuración
+### Configuración
 
 #### package.json - Scripts
 ```json
@@ -38,7 +38,7 @@ Has configurado exitosamente Jest para testing en tu proyecto de React Native co
 - ✅ Presets para TypeScript y React configurados
 - ✅ Compatibilidad con Node.js y navegador
 
-### 🧪 Tests Funcionando
+### Tests Funcionando
 
 **Tests Básicos (PASANDO):**
 - ✅ App.test.tsx - Tests básicos de la aplicación (3 tests)
@@ -46,7 +46,7 @@ Has configurado exitosamente Jest para testing en tu proyecto de React Native co
 
 **Total:** 6 tests pasando exitosamente
 
-### 📝 Comandos Disponibles
+### Comandos Disponibles
 
 ```bash
 # Ejecutar todos los tests
@@ -64,18 +64,18 @@ npm run test:coverage
 ```
 __tests__/
 ├── App.test.tsx       ✅ Funcionando
-├── utils.test.ts      ✅ Funcionando
-└── Counter.test.tsx   ⚠️  (Ejemplo React Native - requiere ajustes)
+└── utils.test.ts      ✅ Funcionando
+
 
 src/
 └── components/
-    └── Counter.tsx    📝 Componente de ejemplo
+    └── Counter.tsx    Componente de ejemplo
 
 jest-setup.js         ✅ Configurado
 babel.config.js       ✅ Configurado
 ```
 
-### ✨ Características del Setup
+### Características del Setup
 
 1. **TypeScript Support** ✅ - Tests en TypeScript funcionando
 2. **React Native Mocking** ✅ - react-native-web configurado
@@ -83,7 +83,7 @@ babel.config.js       ✅ Configurado
 4. **Watch Mode** ✅ - Modo watch para desarrollo
 5. **ES6/JSX Support** ✅ - Babel configurado correctamente
 
-### 🎯 Próximos Pasos
+### Próximos Pasos
 
 1. **Para testing de componentes React Native:**
    - El setup actual funciona, pero react-native-web renderiza de manera diferente
@@ -102,7 +102,7 @@ babel.config.js       ✅ Configurado
    - Navigation logic
    - Custom hooks
 
-### 🚀 Ejemplo de Test Funcional
+### Ejemplo de Test Funcional
 
 ```typescript
 // src/services/spacex.test.ts
@@ -114,6 +114,6 @@ describe('SpaceX Service', () => {
 });
 ```
 
-## 🎉 ¡Setup Completado!
+## ¡Setup Completado!
 
 Tu entorno de testing está listo para desarrollo. Los tests básicos están funcionando correctamente y puedes comenzar a escribir tests para tu lógica de negocio.
