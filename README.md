@@ -30,7 +30,7 @@ Esta aplicación de React Native muestra información sobre los lanzamientos de 
 
 ### Funcionalidades Principales:
 - 📋 **Lista de lanzamientos pasados** con filtrado y búsqueda avanzada
-- 🚀 **Lista de lanzamientos próximos** con cuenta regresiva en tiempo real
+- 🚀 **Lista de lanzamientos próximos** con información de countdown
 - 📱 **Detalles completos** de cada lanzamiento
 - ⭐ **Sistema de favoritos** persistente
 - 🔍 **Búsqueda y filtrado** avanzado
@@ -49,7 +49,7 @@ El proyecto implementa una arquitectura robusta que prioriza la mantenibilidad y
 
 ---
 
-## � Screenshots y Demo
+## 📱 Screenshots y Demo
 
 ### 🎥 Video Demostración
 
@@ -81,7 +81,7 @@ El proyecto implementa una arquitectura robusta que prioriza la mantenibilidad y
 - Navegación fluida y diseño consistente
 - Loading states y estados vacíos bien manejados
 
-**� Detalles de Lanzamiento (`app-details.png`)**
+**📱 Detalles de Lanzamiento (`app-details.png`)**
 - Vista detallada con información técnica completa
 - Imágenes del lanzamiento y cohete
 - Enlaces a recursos externos (videos, artículos)
@@ -371,81 +371,51 @@ main          ← La rama sagrada, solo código que funciona
 - ✅ Los checks deben pasar
 - ✅ Debe estar actualizada
 
-### Los ambientes (cada uno con su personalidad)
+### Los ambientes configurados
 
-#### 1. Development - "El patio de juegos"
-**Se activa cuando**: Hago push a `develop`
+#### 1. Development
+**Se activa cuando**: Ejecuto `npm start` localmente
 
 ```bash
-# Es tan simple como:
 expo start --dev-client
 ```
 
-**Lo que tiene**:
-- Hot reloading
-- Debug mode activado (logs por todos lados)
-- Logs súper detallados
-- Mock data cuando me da paja usar la API real
+**Características**:
+- Hot reloading habilitado
+- Debug mode activado
+- Logs detallados para desarrollo
+- Acceso directo a la API de SpaceX
 
-#### 2. Staging - "El ensayo general"
-**Se activa cuando**: Mergeo a `master`
-
-```bash
-# Build automático con EAS
-eas build --profile preview --platform all
-```
-
-**Lo que tiene**:
-- Build optimizado pero no completamente ofuscado (para poder debuggear si algo falla)
-- Testing de integración (aquí es donde pruebo flujos completos)
-- QA manual
-- Performance testing
-
-#### 3. Production - "El momento de la verdad"
-**Se activa cuando**: Creo un tag `v*` (ejemplo: v1.2.0)
+#### 2. CI/CD Pipeline
+**Se activa cuando**: Push a ramas principales (`main`, `master`, `develop`, `test-pipeline`)
 
 ```bash
-# Build de producción (aquí sí me pongo serio)
-eas build --profile production --platform all
-eas submit --platform all
+# Build automático con GitHub Actions
+npm test -- --coverage --watchAll=false
+eas build --platform android --profile preview --non-interactive
 ```
 
-**Lo que tiene**:
-- Build completamente optimizado (cada byte cuenta)
-- Code obfuscation (porque soy paranoico)
-- Bundle size minimizado (usuarios con poco espacio me lo agradecen)
-- Monitoreo de errores activo (para saber si algo explota)
+**Características**:
+- Testing automático con coverage
+- TypeScript validation
+- Build verification
+- Codecov reporting
 
-### Quality Gates (o cómo evito subir código basura)
+### Quality Gates
 
-#### Pre-commit Hooks - "El portero del repo"
-*Usa Husky y lint-staged para atrapar errores antes del commit*
+El proyecto mantiene calidad de código mediante:
 
-```json
-// En package.json - Mi policía personal
-{
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",      // Revisa todo antes del commit
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"  // Commits con formato
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",      // Arregla lo que pueda automáticamente
-      "prettier --write"   // Y lo deja bonito
-    ],
-    "*.{json,md}": [
-      "prettier --write"   // Hasta los JSONs quedan lindos
-    ]
-  }
-}
-```
+#### **GitHub Actions CI/CD**
+- ✅ **TypeScript check** en cada push
+- ✅ **Tests automáticos** con coverage reporting
+- ✅ **Build verification** para detectar errores
+- ✅ **Codecov integration** para tracking de cobertura
 
-#### Conventional Commits (porque me gusta el orden)
+#### Conventional Commits
+
+El proyecto sigue el estándar de Conventional Commits para mantener un historial claro:
 
 ```bash
-# Así escribo mis commits (y me entiende hasta el yo del futuro)
 feat: add countdown timer for upcoming launches       # Nueva funcionalidad
 fix: resolve memory leak in LaunchCard component     # Arreglo de bug
 docs: update API documentation                       # Cambios en docs
@@ -453,184 +423,108 @@ style: improve button hover states                  # Mejoras visuales
 refactor: extract date formatting to adapter        # Refactoring
 test: add integration tests for LaunchService       # Más tests
 chore: update dependencies to latest versions       # Mantenimiento
-
-# El formato que uso:
-<tipo>[scope opcional]: <descripción corta>
-
-[cuerpo opcional con más detalles]
-
-[footer opcional]
 ```
 
-### Secrets Management (donde guardo las cosas importantes)
+### Secrets Management
 
-#### Los secrets de GitHub que configuré:
+#### **Secrets de GitHub configurados:**
 
 ```bash
-# Para EAS y Expo (los más importantes)
-EXPO_TOKEN=eas_xyz123...                    # El token que me da acceso a EAS
-EXPO_APPLE_ID=developer@email.com           # Mi Apple Developer ID
-EXPO_APPLE_PASSWORD=app-specific-password   # Password específica de app
+# Para EAS y Expo
+EXPO_TOKEN=eas_xyz123...                    # Token para acceso a EAS
 
 # Para métricas de cobertura
 CODECOV_TOKEN=codecov_xyz123...             # Para subir coverage reports
-
-# Para notificaciones (porque me gusta saber cuando algo pasa)
-SLACK_WEBHOOK=https://hooks.slack.com/...   # Mi webhook de Slack
-DISCORD_WEBHOOK=https://discord.com/...     # Por si Slack falla
 ```
 
-#### Variables de entorno por ambiente (cada uno es especial)
+#### **Variables de entorno por ambiente**
 
 ```javascript
-// Development - "Todo vale"
+// Development
 export const config = {
   API_URL: 'https://api.spacexdata.com/v4',
-  ENVIRONMENT: 'development',
-  DEBUG_MODE: true,          // Logs por todas partes
-  CACHE_DURATION: 60000,     // 1 minuto (para desarrollar rápido)
+  CACHE_DURATION: 60000,     // 1 minuto para desarrollo rápido
 };
 
-// Staging - "Casi como producción"
+// Production (futuro)
 export const config = {
   API_URL: 'https://api.spacexdata.com/v4',
-  ENVIRONMENT: 'staging',
-  DEBUG_MODE: false,         // Ya no tantos logs
-  CACHE_DURATION: 300000,    // 5 minutos (más realista)
-};
-
-// Production - "Aquí no se juega"
-export const config = {
-  API_URL: 'https://api.spacexdata.com/v4',
-  ENVIRONMENT: 'production',
-  DEBUG_MODE: false,         // Cero logs innecesarios
-  CACHE_DURATION: 600000,    // 10 minutos (eficiencia máxima)
+  CACHE_DURATION: 600000,    // 10 minutos para eficiencia
 };
 ```
 
-### Monitoring y alertas (para dormir tranquilo)
+### Monitoreo y métricas actuales
 
-#### Métricas que reviso automáticamente
+#### **Métricas disponibles:**
 
-```yaml
-# .github/workflows/metrics.yml
-name: Performance Metrics
+- **Build Status**: Visible en GitHub Actions badge
+- **Test Coverage**: Reportado automáticamente a Codecov
+- **Type Safety**: Verificado en cada push con TypeScript
+- **Dependency Security**: Monitoreado por GitHub Dependabot
 
-on:
-  schedule:
-    - cron: '0 0 * * *'  # Todos los días a medianoche
+### Mi flujo de desarrollo actual
 
-jobs:
-  metrics:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📊 Revisar tamaño del bundle
-        run: |
-          npm run build
-          npx bundlesize  # Porque apps pesadas no las usa nadie
-
-      - name: 🔍 Auditoría de seguridad
-        run: npm audit --audit-level moderate  # Para dormir tranquilo
-
-      - name: 📱 Revisar estado en stores
-        run: |
-          # Revisar si la app sigue viva
-          # Bajar reportes de crashes
-          # Monitorear reviews de usuarios
-```
-
-#### Notificaciones (para estar al tanto de todo)
-
-```bash
-# Lo que me llega a Slack:
-- Build Success: ✅ Build #123 completado para v1.2.0
-- Build Failure: ❌ Build #124 falló en tests de integración
-- Release: 🚀 v1.2.0 desplegado en App Store y Google Play
-- Security Alert: 🚨 Vulnerabilidad detectada en dependencia
-```
-
-### Mi flujo de desarrollo (de caos a orden)
-
-#### 1. Mi workflow diario
+#### 1. Workflow diario
 ```bash
 # 1. Crear rama para nueva feature
 git checkout -b feature/nueva-funcionalidad
 
-# 2. Desarrollar tranquilo (commits frecuentes)
+# 2. Desarrollar con commits frecuentes
 git add .
 git commit -m "feat: add new functionality"
 
 # 3. Subir y crear PR
 git push origin feature/nueva-funcionalidad
-# Crear PR en GitHub (con descripción decente)
+# Crear PR en GitHub
 
-# 4. El CI hace su magia automáticamente:
-#    - Revisa TypeScript (porque odio los errores de tipos)
-#    - Pasa el linter (código bonito = mente tranquila)
-#    - Corre todos los tests (85 y contando)
-#    - Verifica que compile (obvio, pero nunca se sabe)
+# 4. El CI automáticamente ejecuta:
+#    - TypeScript check
+#    - Tests con coverage
+#    - Build verification
 ```
 
-#### 2. El flow de integración
+#### 2. Flow de integración
 ```bash
-# 1. Review del PR y merge a develop
-# 2. CI ejecuta todo el pipeline
-# 3. Deploy automático a staging (para probar en serio)
-# 4. QA testing manual (aka: usar la app como humano)
-# 5. Merge a master (solo con mi aprobación)
+# 1. Review del PR
+# 2. CI ejecuta validaciones
+# 3. Merge a rama principal
+# 4. Deploy automático (futuro)
 ```
 
-#### 3. El flow de release (el momento emocionante)
-```bash
-# 1. Crear tag de release
-git tag v1.2.0
-git push origin v1.2.0
+### Troubleshooting
 
-# 2. El pipeline de release hace todo solo:
-#    - Build completo para iOS y Android
-#    - Submit a las App Stores
-#    - Crear GitHub Release
-#    - Notificar al equipo (o sea, a mí)
-```
+#### **Problemas comunes y soluciones:**
 
-### Troubleshooting (cuando las cosas se rompen)
-
-#### Los problemas que ya resolví:
-
-**1. Cuando EAS Build explota**
-```bash
-# Para debuggear localmente
-eas build --platform ios --local  # Build en mi máquina
-eas build:view [BUILD_ID]         # Ver qué pasó exactamente
-```
-
-**2. Cuando los tests fallan en CI pero pasan local**
+**1. Tests fallan en CI pero pasan localmente**
 ```bash
 # Ejecutar en el mismo ambiente que CI
 CI=true npm test
-npm run test:coverage -- --ci  # Como si fuera el servidor
+npm run test:coverage -- --ci
 ```
 
-**3. Cuando los secrets están mal**
+**2. Errores de configuración de EAS**
 ```bash
-# Revisar secrets en GitHub (sin exponerlos, obvio)
-# Re-generar tokens cuando expiran
-# Verificar que el eas.json esté bien formateado
-```
-
-#### Logs y debugging (mi salvavidas)
-
-```bash
-# Ver logs de EAS builds
+# Verificar configuración
 eas build:list
 eas build:view [BUILD_ID]
+```
 
-# Ver logs de GitHub Actions
+**3. Problemas con secrets de GitHub**
+```bash
+# Verificar que los secrets estén configurados correctamente
+# Re-generar tokens cuando expiren
+# Validar formato del eas.json
+```
+
+#### **Logs y debugging útiles**
+
+```bash
+# Ver logs de GitHub Actions en la interfaz web
 # GitHub → Actions → Workflow run → View logs
 
-# Local debugging
+# Debugging local
 expo start --dev-client
-expo export --dev
+npm run test:watch  # Para desarrollo de tests
 ```
 
 ### Performance Optimizations
@@ -681,11 +575,11 @@ module.exports = {
 - **Queue Time**: < 5 minutos
 - **Deployment Frequency**: 2-3 releases por semana
 
-#### Quality Metrics
-- **Test Coverage**: > 85%
-- **Code Quality**: SonarQube Score > 8.0
-- **Security Vulnerabilities**: 0 critical, < 5 medium
-- **Bundle Size**: < 25MB (iOS), < 30MB (Android)
+#### **Quality Metrics actuales:**
+- **Test Coverage**: 23.01% (local) / ~18% (Codecov)
+- **Type Safety**: 100% (TypeScript strict mode)
+- **Code Quality**: Mantenido mediante reviews y CI
+- **Security**: Dependabot para dependencias vulnerables
 
 ---
 
@@ -736,10 +630,9 @@ src/
 │   └── repositories/
 ├── styles/
 │   └── tailwindStyles.ts
-├── types/
-│   ├── launch.types.ts
-│   └── navigation.types.ts
-└── utils/
+└── types/
+    ├── launch.types.ts
+    └── navigation.types.ts
 ```
 
 ---
@@ -763,7 +656,6 @@ src/
 - **@react-navigation/stack ^7.4.2**: Navegación por stack
 
 ### Gestión de Estado y Datos
-- **Zustand ^5.0.6**: Estado global ligero
 - **AsyncStorage ^2.2.0**: Persistencia local
 - **Axios ^1.10.0**: Cliente HTTP
 - **Zod ^3.25.67**: Validación de esquemas
@@ -1074,7 +966,7 @@ describe('ImageAdapter', () => {
 ```typescript
 // LaunchCard/__tests__/LaunchCard.test.tsx
 describe('LaunchCard', () => {
-  // Mi primer snapshot test - me voló la cabeza cuando entendí cómo funcionaba
+  // Mi primer snapshot test - implementación que validé funcionara correctamente
   it('should render correctly with valid launch data', () => {
     const { toJSON } = render(<LaunchCard launch={mockLaunch} />);
     expect(toJSON()).toMatchSnapshot();
@@ -1090,7 +982,7 @@ describe('LaunchCard', () => {
 
 ### Cómo Aprendí a Hacer Mocking
 
-El mocking me costó bastante entender, pero cuando hizo click fue genial:
+El mocking requirió práctica para dominar, pero una vez implementado correctamente:
 
 ```typescript
 // Mock de AsyncStorage - mi primer mock exitoso
@@ -1114,10 +1006,10 @@ const mockNavigation = {
 ```
 All Tests Results:
 ✅ 8 test suites passed
-✅ 85 tests passed
+✅ 89 tests passed
 ✅ 3 snapshots passed
-⏱️  Execution time: ~15 seconds
-📊 Coverage: ~85% lines covered
+⏱️  Execution time: ~3 seconds
+📊 Coverage: 23.01% lines covered
 ```
 
 ### Tests Eliminados (Por decisión del proyecto)
@@ -1544,11 +1436,11 @@ export const useLaunchService = () => { // Este hook proporciona una instancia s
 
 **¿Por qué useMemo?**
 - **Performance**: Evita recrear servicios en cada render
-- **Singleton pattern**: Misma instancia durante la vida del componente // A que se refiere esto? Se refiere a que el mismo servicio se reutiliza en lugar de crear uno nuevo en cada renderizado, lo que ahorra recursos y mejora el rendimiento.
+- **Singleton pattern**: Misma instancia durante la vida del componente
 - **Dependency injection**: Fácil de cambiar para tests
 
 #### useFavorites.ts
-**Responsabilidad**: Estado de favoritos con persistencia automática // Este hook gestiona la lista de favoritos y su persistencia
+**Responsabilidad**: Estado de favoritos con persistencia automática
 
 ```typescript
 export const useFavorites = () => {
@@ -2186,13 +2078,13 @@ npm test -- --verbose
 - **Usar Flipper** para debugging avanzado
 - **Configurar ProGuard** para builds de producción más pequeños
 
-### Estructura de Deployment
+### Estructura de Deployment actual
 
 ```
-├── Development     → expo start
-├── Preview        → eas build --profile preview
-├── Production     → eas build --profile production
-└── OTA Updates    → eas update
+├── Development     → npm start (local)
+├── CI/CD Testing   → GitHub Actions (automático)
+├── Preview Build   → eas build --profile preview (manual)
+└── Future: Production → eas build --profile production
 ```
 
 ---
@@ -2236,17 +2128,17 @@ npm test -- --verbose
 ## 📊 Métricas del Proyecto
 
 ### Estadísticas de Código
-- **Líneas de código**: ~3,500
+- **Líneas de código**: ~5,200 (TypeScript/TSX)
 - **Archivos TypeScript**: 45+
 - **Componentes**: 11 (8 components + 3 screens)
 - **Tests**: 89 casos
-- **Cobertura**: ~23%
+- **Cobertura**: 23.01% (local) / ~18% (Codecov)
 
-### Performance Benchmarks
-- **Tiempo de inicio**: < 3 segundos
-- **Navegación**: < 300ms
-- **Carga de API**: < 2 segundos
-- **Bundle size**: ~15MB
+### Performance Benchmarks (estimados)
+- **Tiempo de inicio**: < 5 segundos (desarrollo)
+- **Navegación**: Fluida con React Navigation
+- **Carga de API**: Dependiente de SpaceX API (~2-3 segundos)
+- **Bundle size**: ~15MB (estimado para producción)
 
 ---
 
