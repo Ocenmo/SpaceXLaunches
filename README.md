@@ -40,7 +40,7 @@ El proyecto implementa una arquitectura robusta que prioriza la mantenibilidad y
 
 - **Arquitectura basada en Adapters** - Separación clara de responsabilidades
 - **Validación con Zod** - Type safety en tiempo de ejecución
-- **Testing comprehensivo** - 85 tests con 85% de cobertura
+- **Testing comprehensivo** - 89 tests con 23% de cobertura (en crecimiento)
 - **UI moderna con NativeWind** - Tailwind CSS para React Native
 - **Persistencia local** - AsyncStorage con abstracción propia
 - **Navegación fluida** - React Navigation configurado profesionalmente
@@ -51,102 +51,119 @@ El proyecto implementa una arquitectura robusta que prioriza la mantenibilidad y
 
 ### Arquitectura de Despliegue
 
-El proyecto implementa un pipeline CI/CD completamente automatizado que garantiza la calidad del código y facilita los despliegues continuos.
+El proyecto implementa un pipeline CI/CD completamente automatizado usando **GitHub Actions** que garantiza la calidad del código y facilita los despliegues continuos.
 
-### El flow completo:
+### El flujo completo:
 
 ```
-Código → GitHub → GitHub Actions → Tests → EAS Build → Stores
+Código → GitHub → GitHub Actions → Tests + Coverage → EAS Build → Deploy
 ```
 
-### Los workflows configurados:
+### 📋 Workflow Configurado (.github/workflows/ci-cd.yml)
 
-#### 1. Pipeline de CI (.github/workflows/ci.yml)
-*Ejecuta validaciones automáticas en cada push*
+El pipeline se ejecuta automáticamente en cada push a las ramas principales:
+
+#### **Trigger del Pipeline:**
+- ✅ Push a: `main`, `master`, `develop`, `test-pipeline`
+- ✅ Pull requests a: `main`, `master`
+
+#### **Job 1: Tests y Validaciones** 🧪
+*Se ejecuta en todas las ramas configuradas*
 
 ```yaml
-name: CI Pipeline
-
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
-
-jobs:
-  test:
-    name: 🧪 Tests y Validaciones
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 📥 Checkout del código
-        uses: actions/checkout@v4
-
-      - name: 📦 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: 📥 Instalar dependencias
-        run: npm ci
-
-      - name: 🔍 Type checking con TypeScript
-        run: npm run typecheck  # TypeScript me ayuda a evitar errores
-
-      - name: 🎨 Verificar estilo del código
-        run: npm run lint       # Prettier y ESLint mantienen consistencia
-
-      - name: 🧪 Ejecutar tests
-        run: npm run test:coverage  # La parte que más me tranquiliza
-
-      - name: 📊 Subir cobertura a Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}  # Mostrar métricas de testing
-
-  build:
-    name: 🏗️ Verificar compilación
-    runs-on: ubuntu-latest
-    needs: test  # Solo después de que los tests pasen
-
-    steps:
-      - name: 📥 Checkout del código
-        uses: actions/checkout@v4
-
-      - name: 📦 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: 📥 Instalar dependencias
-        run: npm ci
-
-      - name: 🏗️ Verificar build
-        run: npx expo export --platform all  # Compilación final
+test:
+  runs-on: ubuntu-latest
+  steps:
+    - name: 📥 Checkout del código
+    - name: 📦 Setup Node.js 18 con cache npm
+    - name: 📥 Instalar dependencias (npm ci)
+    - name: 🔍 TypeScript check (tsc --noEmit)
+    - name: 🧪 Ejecutar tests con coverage
+    - name: 📊 Subir coverage a Codecov
 ```
 
-#### 2. Pipeline de Build (.github/workflows/build.yml)
-*Se ejecuta solo en main y tags - aquí es donde la cosa se pone seria*
+**¿Qué valida este job?**
+- ✅ **89 tests** ejecutándose correctamente
+- ✅ **TypeScript** sin errores de compilación
+- ✅ **Coverage de código** reportado a Codecov
+- ✅ **Snapshots** de componentes actualizados
+
+#### **Job 2: Build** 🏗️
+*Solo se ejecuta en la rama `main`*
 
 ```yaml
-name: Build Pipeline
+build:
+  needs: test
+  if: github.ref == 'refs/heads/main'
+  steps:
+    - name: � Setup Expo con EAS CLI
+    - name: 🔐 Login a EAS con token
+    - name: 📱 Build APK para Android
+    - name: 📤 Upload del APK como artifact
+```
 
-on:
-  push:
-    branches: [main]    # Solo en producción
-    tags: ['v*']        # O en releases oficiales
+#### **Job 3: Deploy** 🚀
+*Solo se ejecuta en la rama `main` después del build*
 
-jobs:
-  build-ios:
-    name: 🍎 Build iOS
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+```yaml
+deploy:
+  needs: [test, build]
+  if: github.ref == 'refs/heads/main'
+  steps:
+    - name: � EAS Update a rama production
+    - name: � Deploy OTA (Over The Air)
+```
 
-    steps:
-      - name: 📥 Checkout del código
-        uses: actions/checkout@v4
+### 📊 Métricas y Monitoreo
+
+#### **Coverage de Tests:**
+- **89 tests** en total ejecutándose
+- **23.01%** de cobertura global (en crecimiento)
+- **100%** en componentes críticos como `LaunchCard`
+- **Snapshots testing** para UI consistency
+
+#### **Herramientas de Calidad:**
+- 🔍 **TypeScript** - Type safety
+- 🧪 **Jest** - Testing framework
+- 📊 **Codecov** - Coverage tracking
+- 🏗️ **EAS Build** - Production builds
+- 🚀 **EAS Update** - OTA deployments
+
+### 🛡️ Configuración de Seguridad
+
+#### **Secrets necesarios en GitHub:**
+```bash
+EXPO_TOKEN=xxxxxxxx  # Token de Expo para EAS CLI
+```
+
+### 📱 Estados del Pipeline
+
+El pipeline puede estar en diferentes estados:
+
+- 🟢 **Verde**: Todos los tests pasan, build exitoso
+- 🟡 **Amarillo**: Pipeline ejecutándose
+- 🔴 **Rojo**: Tests fallan o build con errores
+- ⚪ **Gris**: Pipeline no configurado o deshabilitado
+
+### 🔧 Comandos de Testing Locales
+
+Para ejecutar las mismas validaciones localmente:
+
+```bash
+# Type checking
+npx tsc --noEmit
+
+# Tests con coverage
+npm test -- --coverage --watchAll=false
+
+# Tests específicos
+npm test src/components/LaunchCard/__tests__/
+
+# Actualizar snapshots
+npm test -- -u
+```
+
+---
 
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
@@ -872,10 +889,27 @@ Unit Tests ← adapters y utils (mi fuerte)
 
 Comencé haciendo tests unitarios porque me resultaron más fáciles de entender, y gradualmente fui subiendo de nivel.
 
-### Tests que Implementé (85 tests con 85% cobertura)
+### 📊 Estado Actual del Testing
+
+#### **Métricas del Pipeline:**
+- ✅ **89 tests** ejecutándose automáticamente
+- ✅ **23.01%** de cobertura global (en crecimiento)
+- ✅ **8 test suites** organizados por módulos
+- ✅ **3 snapshots** para testing de UI
+- ✅ **Pipeline automático** con GitHub Actions
+
+#### **Distribución por Módulos:**
+```
+src/services/adapters/     ← 28.65% coverage (mi área fuerte)
+src/components/LaunchCard/ ← 100% coverage (crítico)
+src/services/             ← 63.33% coverage (lógica de negocio)
+src/hooks/                ← 37.5% coverage (React hooks)
+```
+
+### Tests que Implementé (89 tests funcionando)
 
 #### 1. SpaceXDataAdapter.test.ts
-**El conjunto de tests del que más orgulloso me siento** - 35 tests cubriendo toda la lógica:
+**El conjunto de tests del que más orgulloso me siento** - Tests cubriendo toda la lógica:
 
 ```typescript
 describe('SpaceXDataAdapter', () => {
@@ -1061,8 +1095,121 @@ const STORAGE_KEYS = {
   FAVORITES: '@spacex_favorites_v1',
   CACHE: '@spacex_cache_v1',
   PREFERENCES: '@spacex_preferences_v1',
+//...
 } as const;
 ```
+
+---
+
+## 📝 Documentación y Comentarios del Código
+
+### Filosofía de Documentación
+
+El proyecto implementa una **documentación multicapa** que combina comentarios técnicos con insights humanos del proceso de desarrollo:
+
+#### **Tipos de Comentarios Implementados:**
+
+1. **📋 Comentarios Técnicos**
+   - Explican **qué hace** cada función/método
+   - Documentan **parámetros y tipos de retorno**
+   - Detallan **casos edge y validaciones**
+
+2. **🧠 Comentarios de Razonamiento**
+   - Explican **por qué** se tomaron ciertas decisiones
+   - Documentan **trade-offs** considerados
+   - Contextualizan **patrones arquitectónicos**
+
+3. **👨‍💻 Comentarios Humanos**
+   - Comparten **experiencias del desarrollo**
+   - Explican **dificultades encontradas**
+   - Documentan **lecciones aprendidas**
+
+### Ejemplos de Documentación
+
+#### **En Types (launch.types.ts):**
+```typescript
+/**
+ * 🚀 SISTEMA DE TIPOS PARA SPACEX API
+ *
+ * Este archivo define toda la estructura de tipos usando Zod para validación
+ * en tiempo de ejecución. La API de SpaceX es bastante consistente, pero
+ * siempre es mejor estar preparado para datos inesperados.
+ *
+ * Patrón usado: Schema-first con generación automática de tipos TypeScript
+ */
+
+// 🔧 Enum estricto para tipos de aterrizaje
+// SpaceX usa estos valores específicos en su API
+export const LandingTypeSchema = z.enum([
+    "ASDS",     // Autonomous Spaceport Drone Ship - las barcazas flotantes
+    "Ocean",    // Aterrizaje controlado en océano (cohetes más viejos)
+    "RTLS",     // Return To Launch Site - aterrizaje en tierra
+]);
+```
+
+#### **En Services (LaunchService.ts):**
+```typescript
+/**
+ * 🎯 SERVICIO PRINCIPAL DE LANZAMIENTOS
+ *
+ * Este es el corazón de la aplicación. Maneja toda la lógica de negocio
+ * relacionada con los lanzamientos de SpaceX, desde la obtención de datos
+ * hasta el filtrado avanzado.
+ *
+ * Decisión de diseño: Usar un patrón de repositorio con adapters para
+ * mantener separada la lógica de negocio de los detalles de implementación
+ */
+
+/**
+ * Obtiene lanzamientos pasados con filtrado y ordenamiento
+ *
+ * 🤔 Reflexión: Al principio tenía todo junto en una función gigante.
+ * Separar en métodos específicos hizo el código mucho más testeable.
+ */
+async getPastLaunches(filters?: LaunchFilters): Promise<Launch[]>
+```
+
+#### **En Components (LaunchCard.tsx):**
+```typescript
+/**
+ * 🎨 COMPONENTE PRINCIPAL DE TARJETA DE LANZAMIENTO
+ *
+ * Este componente es reutilizado en múltiples pantallas y maneja toda
+ * la presentación visual de un lanzamiento individual.
+ *
+ * 💡 Lección aprendida: Mantener los componentes "tontos" (solo presentación)
+ * hace que sean mucho más fáciles de testear y reutilizar.
+ */
+
+// 🎯 Props del componente - interfaz limpia y específica
+interface LaunchCardProps {
+    launch: Launch;           // Datos del lanzamiento a mostrar
+    onPress: () => void;      // Callback cuando se toca la tarjeta
+    showFavoriteButton?: boolean; // Control opcional del botón de favoritos
+}
+```
+
+### 📊 Cobertura de Documentación
+
+#### **Archivos Completamente Documentados:**
+- ✅ `src/types/launch.types.ts` - Sistema de tipos
+- ✅ `src/types/navigation.types.ts` - Tipos de navegación
+- ✅ `src/styles/tailwindStyles.ts` - Sistema de estilos
+- ✅ `src/services/LaunchService.ts` - Lógica de negocio
+- ✅ `src/services/api/ApiService.ts` - Cliente HTTP
+- ✅ `src/services/adapters/SpaceXDataAdapter.ts` - Transformación de datos
+- ✅ `src/hooks/useFavorites.ts` - Hook de favoritos
+- ✅ `src/hooks/useLaunchService.ts` - Hook de servicio
+- ✅ `src/components/LaunchCard/LaunchCard.tsx` - Componente principal
+- ✅ `src/screens/PastLaunches/PastLaunchesScreen.tsx` - Pantalla principal
+- ✅ `App.tsx` - Entrada de la aplicación
+
+#### **Beneficios de esta Documentación:**
+1. 🚀 **Onboarding rápido** para nuevos desarrolladores
+2. 🔧 **Mantenimiento simplificado** con contexto claro
+3. 🧪 **Testing mejorado** con casos de uso documentados
+4. 📚 **Conocimiento preservado** del proceso de desarrollo
+5. 🎯 **Decisiones justificadas** con razonamiento documentado
 
 ---
 
