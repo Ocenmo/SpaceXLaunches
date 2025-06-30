@@ -6,6 +6,7 @@ Esta aplicación móvil permite visualizar información completa sobre los lanza
 
 ## 📋 Tabla de Contenidos
 - [Visión General](#visión-general)
+- [Screenshots y Demo](#screenshots-y-demo)
 - [Pipeline CI/CD](#pipeline-cicd)
 - [Arquitectura del Proyecto](#arquitectura-del-proyecto)
 - [Estructura de Carpetas](#estructura-de-carpetas)
@@ -17,6 +18,7 @@ Esta aplicación móvil permite visualizar información completa sobre los lanza
 - [Sistema de Testing](#sistema-de-testing)
 - [Navegación](#navegación)
 - [Estado y Persistencia](#estado-y-persistencia)
+- [Documentación y Comentarios del Código](#documentación-y-comentarios-del-código)
 - [Explicación Detallada del Código](#explicación-detallada-del-código)
 - [Cómo Ejecutar el Proyecto](#cómo-ejecutar-el-proyecto)
 
@@ -47,7 +49,117 @@ El proyecto implementa una arquitectura robusta que prioriza la mantenibilidad y
 
 ---
 
-## 🔄 Pipeline CI/CD
+## � Screenshots y Demo
+
+### 🎥 Video Demostración
+
+![Demo de la aplicación](docs/videos/app-demo.MP4)
+
+*Demo completo mostrando navegación, búsqueda, filtros y sistema de favoritos*
+
+> **📝 Nota**: Para una demostración completa de la aplicación, puedes ejecutar el proyecto localmente siguiendo las [instrucciones de instalación](#-cómo-ejecutar-el-proyecto).
+
+### 📸 Capturas de Pantalla
+
+#### **Vista General de la Aplicación**
+
+| Pantalla Principal | Detalles de Lanzamiento | Búsqueda | Filtros |
+|-------------------|------------------------|-----------|---------|
+| ![Home](docs/screenshots/app-home.png) | ![Details](docs/screenshots/app-details.png) | ![Search](docs/screenshots/app-search.png) | ![Filters](docs/screenshots/app-filters.png) |
+
+#### **🔄 Pipeline CI/CD en Acción**
+
+| GitHub Actions | Coverage Report | Workflow Overview |
+|---------------|-----------------|-------------------|
+| ![CI Success](docs/pipeline/ci-succes.png) | ![Coverage](docs/pipeline/codecov-report.png) | ![Workflow](docs/pipeline/workflow-overview.png) |
+
+#### **📱 Funcionalidades Destacadas en las Capturas**
+
+**🏠 Pantalla Principal (`app-home.png`)**
+- Lista elegante de lanzamientos pasados con información clave
+- Tarjetas visuales con estado del lanzamiento (éxito/fallo)
+- Navegación fluida y diseño consistente
+- Loading states y estados vacíos bien manejados
+
+**� Detalles de Lanzamiento (`app-details.png`)**
+- Vista detallada con información técnica completa
+- Imágenes del lanzamiento y cohete
+- Enlaces a recursos externos (videos, artículos)
+- Información de telemetría y especificaciones
+
+**🔎 Funcionalidad de Búsqueda (`app-search.png`)**
+- Búsqueda en tiempo real por nombre de misión
+- Filtros interactivos por estado y fecha
+- Resultados instantáneos con highlighting
+- UX optimizada para móvil
+
+**⚙️ Filtros Avanzados (`app-filters.png`)**
+- Interfaz intuitiva de filtrado
+- Múltiples criterios combinables
+- Feedback visual inmediato
+- Persistencia de preferencias del usuario
+
+#### **🔄 Métricas del Pipeline CI/CD**
+
+**✅ GitHub Actions (`ci-succes.png`)**
+- Pipeline ejecutándose exitosamente con todos los jobs en verde
+- Validación automática de TypeScript, tests y coverage
+- Build y deploy configurados para producción
+- Tiempos de ejecución optimizados
+
+**📊 Coverage Report (`codecov-report.png`)**
+- Reporte detallado de cobertura de código
+- Integración automática con el pipeline
+- Métricas por archivo y funciones
+- Tracking de tendencias de calidad
+
+**⚙️ Workflow Overview (`workflow-overview.png`)**
+- Vista completa del flujo CI/CD
+- Jobs paralelos y dependencias claras
+- Configuración professional para equipos
+- Triggers automáticos por branch y PR
+
+### 🎯 Funcionalidades Destacadas en las Capturas
+
+1. **🎨 UI Moderna con NativeWind**
+   - Diseño limpio y profesional
+   - Componentes reutilizables
+   - Consistencia visual en toda la app
+
+2. **⚡ Performance Optimizada**
+   - Carga rápida de listas
+   - Imágenes optimizadas
+   - Navegación fluida
+
+3. **📱 Experiencia Mobile-First**
+   - Diseño responsive
+   - Gestos nativos
+   - Feedback visual inmediato
+
+4. **🔍 Funcionalidad Avanzada**
+   - Filtrado en tiempo real
+   - Persistencia de favoritos
+   - Búsqueda inteligente
+
+### 🚀 Cómo Generar tus Propias Capturas
+
+```bash
+# 1. Ejecutar la aplicación
+npm start
+
+# 2. Abrir en simulador/dispositivo
+npm run ios    # o npm run android
+
+# 3. Navegar por las diferentes pantallas
+# 4. Capturar screenshots usando:
+#    - iOS Simulator: Cmd + S
+#    - Android Emulator: Ctrl + S
+#    - Dispositivo físico: Botones de volumen + power
+```
+
+---
+
+## �🔄 Pipeline CI/CD
 
 ### Arquitectura de Despliegue
 
@@ -89,12 +201,12 @@ test:
 - ✅ **Snapshots** de componentes actualizados
 
 #### **Job 2: Build** 🏗️
-*Solo se ejecuta en la rama `main`*
+*Solo se ejecuta en la rama `master`*
 
 ```yaml
 build:
   needs: test
-  if: github.ref == 'refs/heads/main'
+  if: github.ref == 'refs/heads/master'
   steps:
     - name: � Setup Expo con EAS CLI
     - name: 🔐 Login a EAS con token
@@ -103,12 +215,12 @@ build:
 ```
 
 #### **Job 3: Deploy** 🚀
-*Solo se ejecuta en la rama `main` después del build*
+*Solo se ejecuta en la rama `master` después del build*
 
 ```yaml
 deploy:
   needs: [test, build]
-  if: github.ref == 'refs/heads/main'
+  if: github.ref == 'refs/heads/master'
   steps:
     - name: � EAS Update a rama production
     - name: � Deploy OTA (Over The Air)
@@ -186,7 +298,7 @@ npm test -- -u
   build-android:
     name: 🤖 Build Android
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')
 
     steps:
       # Mismos pasos fundamentales que iOS
@@ -247,7 +359,7 @@ main          ← La rama sagrada, solo código que funciona
 
 #### Las reglas que me impuse (y que me salvan la vida):
 
-**Rama `main`:**
+**Rama `master`:**
 - ✅ Necesita review de al menos 1 persona (aunque sea yo solo en el proyecto)
 - ✅ Todos los checks deben pasar
 - ✅ Debe estar actualizada antes del merge
@@ -270,13 +382,13 @@ expo start --dev-client
 ```
 
 **Lo que tiene**:
-- Hot reloading (porque recargar manualmente es del siglo pasado)
+- Hot reloading
 - Debug mode activado (logs por todos lados)
-- Logs súper detallados (a veces demasiado)
+- Logs súper detallados
 - Mock data cuando me da paja usar la API real
 
 #### 2. Staging - "El ensayo general"
-**Se activa cuando**: Mergeo a `main`
+**Se activa cuando**: Mergeo a `master`
 
 ```bash
 # Build automático con EAS
@@ -286,8 +398,8 @@ eas build --profile preview --platform all
 **Lo que tiene**:
 - Build optimizado pero no completamente ofuscado (para poder debuggear si algo falla)
 - Testing de integración (aquí es donde pruebo flujos completos)
-- QA manual (aka: me siento y uso la app como usuario normal)
-- Performance testing (porque nadie quiere una app lenta)
+- QA manual
+- Performance testing
 
 #### 3. Production - "El momento de la verdad"
 **Se activa cuando**: Creo un tag `v*` (ejemplo: v1.2.0)
@@ -465,7 +577,7 @@ git push origin feature/nueva-funcionalidad
 # 2. CI ejecuta todo el pipeline
 # 3. Deploy automático a staging (para probar en serio)
 # 4. QA testing manual (aka: usar la app como humano)
-# 5. Merge a main (solo con mi aprobación)
+# 5. Merge a master (solo con mi aprobación)
 ```
 
 #### 3. El flow de release (el momento emocionante)
