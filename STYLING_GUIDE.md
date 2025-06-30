@@ -62,4 +62,6 @@ Asegúrate de tener NativeWind instalado y configurado en tu proyecto. Consulta 
 
 // Utilidades Tailwind + estilos personalizados
 <View className="bg-blue-500" style={{ borderWidth: 2, borderColor: '#1e40af' }} />
+
+//Probando pipeline
 ```
