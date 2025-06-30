@@ -2027,3 +2027,4 @@ npm test -- --verbose
 - [ ] Agregar realtime updates
 - [ ] Soporte para tablets
 #Testeando pipeline
+# Pipeline Test
