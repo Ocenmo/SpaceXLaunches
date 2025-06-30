@@ -437,20 +437,16 @@ EXPO_TOKEN=eas_xyz123...                    # Token para acceso a EAS
 CODECOV_TOKEN=codecov_xyz123...             # Para subir coverage reports
 ```
 
-#### **Variables de entorno por ambiente**
+### Configuración de API
 
-```javascript
-// Development
-export const config = {
-  API_URL: 'https://api.spacexdata.com/v4',
-  CACHE_DURATION: 60000,     // 1 minuto para desarrollo rápido
-};
+La aplicación está configurada para usar directamente la API pública de SpaceX:
 
-// Production (futuro)
-export const config = {
-  API_URL: 'https://api.spacexdata.com/v4',
-  CACHE_DURATION: 600000,    // 10 minutos para eficiencia
-};
+```typescript
+// En ApiService.ts
+this.Client = axios.create({
+    baseURL: 'https://api.spacexdata.com/v4',    // API pública de SpaceX
+    timeout: 10000,                              // 10 segundos de timeout
+});
 ```
 
 ### Monitoreo y métricas actuales
@@ -733,15 +729,19 @@ SpaceX API → ApiResponseAdapter → DataValidationAdapter → SpaceXDataAdapte
 ### Gestión de Errores
 
 ```typescript
-// En LaunchService.ts
-try {
-  const rawData = await this.apiService.getLaunches();
-  const validatedData = DataValidationAdapter.validateLaunches(rawData);
-  const normalizedData = SpaceXDataAdapter.normalizeLaunches(validatedData);
-  return normalizedData;
-} catch (error) {
-  console.error('Error fetching launches:', error);
-  throw new Error('Failed to fetch launches');
+// En ApiService.ts - nivel de networking
+async getLaunches(): Promise<Launch[]> {
+    try {
+        const response = await this.Client.get('/launches');
+        return response.data.map((launch: any) => LaunchSchema.parse(launch));
+    } catch (error) {
+        throw new Error(`Error fetching launches: ${error}`);
+    }
+}
+
+// En LaunchService.ts - nivel de negocio
+async getPastLaunches(): Promise<Launch[]> {
+    return this.repository.getPastLaunches();
 }
 ```
 
@@ -2011,24 +2011,11 @@ expo export --platform all
 }
 ```
 
-### Configuración de Entorno
-
-#### Variables de Entorno (.env)
-```bash
-# API Configuration
-SPACEX_API_BASE_URL=https://api.spacexdata.com/v4
-API_TIMEOUT=10000
-
-# App Configuration
-APP_NAME=SpaceX Launches
-APP_VERSION=1.0.0
-```
-
-#### Configuración de EAS (eas.json)
+### Configuración de EAS (eas.json)
 ```json
 {
   "cli": {
-    "version": ">= 8.0.0"
+    "version": ">= 16.0.0"
   },
   "build": {
     "development": {
